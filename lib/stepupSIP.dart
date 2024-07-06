@@ -106,7 +106,7 @@ class _UPscreenState extends State<UPscreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Investment per month (in Rs.)",
@@ -123,7 +123,7 @@ class _UPscreenState extends State<UPscreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Annual Step up (in %)",
@@ -140,7 +140,7 @@ class _UPscreenState extends State<UPscreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Expected return (in % p.a)",
@@ -157,7 +157,7 @@ class _UPscreenState extends State<UPscreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Time period (upto 50 years)",

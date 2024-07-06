@@ -73,7 +73,7 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Targeted Wealth (in Rs.)",
@@ -90,7 +90,7 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Expected return (in % p.a)",
@@ -107,7 +107,7 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Mothly Investment",
@@ -124,7 +124,7 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Adjust for inflation",

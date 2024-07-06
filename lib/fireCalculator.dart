@@ -101,7 +101,7 @@ Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Monthly Expense (in Rs.)",
@@ -118,7 +118,7 @@ Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Current Age ",
@@ -135,7 +135,7 @@ Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Retirement Age",
@@ -152,7 +152,7 @@ Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Assumed inflation (in %)",

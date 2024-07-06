@@ -90,7 +90,7 @@ class _EmiScreenState extends State<EmiScreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Loan amount (in Rs.)",
@@ -107,7 +107,7 @@ class _EmiScreenState extends State<EmiScreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Rate of interest (in % p.a)",
@@ -124,7 +124,7 @@ class _EmiScreenState extends State<EmiScreen> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Time period (upto 50 years)",

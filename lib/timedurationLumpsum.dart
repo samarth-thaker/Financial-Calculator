@@ -62,7 +62,7 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
     return Scaffold(
       appBar: AppBar(title: const Text("Time Duration - One Time")),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding:  EdgeInsets.all(20.0),
         child: Column(
           children: [
             SizedBox(
@@ -72,7 +72,7 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188) ,
                     ),
                   ),
                   hintText: "Targeted Wealth (in Rs.)",
@@ -89,7 +89,7 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Expected return (in % p.a)",
@@ -106,7 +106,7 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Mothly Investment",
@@ -123,7 +123,7 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Adjust for inflation",

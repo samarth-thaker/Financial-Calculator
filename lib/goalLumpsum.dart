@@ -84,7 +84,7 @@ class _LumpsumscreenState extends State<Goallumpsum> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Targeted Wealth (in Rs.)",
@@ -101,7 +101,7 @@ class _LumpsumscreenState extends State<Goallumpsum> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Expected return (in % p.a)",
@@ -118,7 +118,7 @@ class _LumpsumscreenState extends State<Goallumpsum> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Time period (upto 50 years)",
