@@ -56,7 +56,23 @@ class _RDscreenState extends State<RDscreen> {
       _earnings = amountEarned(principal, annualInterestRate, years);
     });
   }
-
+  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
+  return Container(
+    width: 200,
+    
+    child: TextButton(
+      onPressed: onTap,
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
+        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+      ),
+      child: Text(
+        action,
+        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+      ),
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,10 +132,11 @@ class _RDscreenState extends State<RDscreen> {
               ),
             ),
             const SizedBox(height: 30),
-            TextButton(
+            /* TextButton(
               onPressed: _calculate,
               child: const Text("Calculate my wealth"),
-            ),
+            ) */
+           customTextButton("Calculate my wealth", _calculate),
             const SizedBox(height: 30),
             Text('Maturity value: Rs. ${_maturityValue.toStringAsFixed(2)}'),
             const SizedBox(height: 30),

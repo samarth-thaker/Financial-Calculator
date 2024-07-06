@@ -64,14 +64,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(249, 245, 237, 213))),
-      leading: Icon(icon, size: 30),
-      trailing: const Icon(Icons.arrow_forward_ios),
+              color: Color.fromARGB(249, 250, 200, 20))),
+      leading: Icon(icon, size: 30, color: Color.fromARGB(249, 250, 200, 20)),
+      trailing: const Icon(Icons.arrow_forward_ios, color: Color.fromARGB(249, 250, 200, 20),),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),
         side: BorderSide(color: Colors.grey.shade300),
       ),
-      tileColor: Colors.black,
+      tileColor: Color.fromARGB(249, 0, 114, 188),
       onTap: onTap,
     );
   }
@@ -79,8 +79,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Financial Calculator')),
-      body: Padding(
+      appBar: AppBar(title: const Text('Financial Calculator', 
+      style: const TextStyle(
+        color: Colors.black,
+      )
+      )),
+      body:Container(
+       /*  decoration: BoxDecoration(
+          color: Color.fromARGB(249, 245, 237, 213)
+        ), */
+        child: Padding(
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
@@ -113,6 +121,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ],
         ),
       ),
+      ),
+     
     );
   }
 }

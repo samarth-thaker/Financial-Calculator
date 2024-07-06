@@ -41,7 +41,23 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
           calculateYears(targetedWealth, initialInvestment, annualInterestRate);
     });
   }
-
+  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
+  return Container(
+    width: 230,
+    
+    child: TextButton(
+      onPressed: onTap,
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
+        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+      ),
+      child: Text(
+        action,
+        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+      ),
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,10 +134,11 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            TextButton(
+           /*  TextButton(
               onPressed: _calculate,
               child: const Text("Calculate Time Duration"),
-            ),
+            ) */
+           customTextButton('Calculate Time Duration', _calculate),
             const SizedBox(height: 30),
             Text(
                 'Total Investment Period: ${timeYears.toStringAsFixed(2)} Years'),

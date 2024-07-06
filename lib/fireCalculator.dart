@@ -51,7 +51,23 @@ class _FIREState extends State<FireScreen> {
   /* double lean(double monthlyExpense) {
     return monthlyExpense * 12 * 20;
   } */
-
+Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
+  return Container(
+    width: 200,
+    
+    child: TextButton(
+      onPressed: onTap,
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
+        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+      ),
+      child: Text(
+        action,
+        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+      ),
+    ),
+  );
+}
   void calculate() {
     double monthlyExpense =
         double.tryParse(_monthlyExpenseController.text) ?? 0.0;
@@ -146,23 +162,7 @@ class _FIREState extends State<FireScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: calculate,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              child: Text(
-                "Calculate my Fire",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+           customTextButton("Calculate my fire", calculate),
             const SizedBox(height: 30),
             Text('Expense today: Rs. ${expenseToday.toStringAsFixed(2)}'),
             const SizedBox(height: 30),

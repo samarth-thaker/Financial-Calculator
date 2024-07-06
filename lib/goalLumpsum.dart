@@ -52,7 +52,23 @@ class _LumpsumscreenState extends State<Goallumpsum> {
       
     });
   }
-
+  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
+  return Container(
+    width: 150,
+    
+    child: TextButton(
+      onPressed: onTap,
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
+        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+      ),
+      child: Text(
+        action,
+        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 24),
+      ),
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,10 +128,11 @@ class _LumpsumscreenState extends State<Goallumpsum> {
               ),
             ),
             const SizedBox(height: 30),
-            TextButton(
+            /* TextButton(
               onPressed: _calculate,
               child: const Text("Plan my goal"),
-            ),
+            ) */
+           customTextButton("Plan my goal", _calculate),
             const SizedBox(height: 30),
             Text(
                 'Inflation adjusted targeted wealth: Rs. ${_maturityValue.toStringAsFixed(2)}'),

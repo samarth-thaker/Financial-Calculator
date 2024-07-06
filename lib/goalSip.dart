@@ -66,7 +66,23 @@ class _SIPGoalScreen extends State<SIPGoal> {
       //_earnings = amountEarned(monthlyInvestment, annualInterestRate, years);
     });
   }
-
+  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
+  return Container(
+    width: 150,
+    
+    child: TextButton(
+      onPressed: onTap,
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
+        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+      ),
+      child: Text(
+        action,
+        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 24),
+      ),
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,10 +159,11 @@ class _SIPGoalScreen extends State<SIPGoal> {
               ),
             ),
             const SizedBox(height: 30),
-            TextButton(
+            /* TextButton(
               onPressed: _calculate,
               child: const Text("Plan SIP Goal"),
-            ),
+            ) */
+            customTextButton("Plan SIP Goal", _calculate),
             const SizedBox(height: 30),
             Text(
                 'Monthly Investment Required: Rs. ${_investmentPerMonth.toStringAsFixed(2)}'),

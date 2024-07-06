@@ -29,7 +29,23 @@ class _CagrscreenState extends State<Cagrscreen> {
     double per = pow(f/i, 1/years)-1;
     return per;
   }
-
+Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
+  return Container(
+    width: 200,
+    
+    child: TextButton(
+      onPressed: onTap,
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
+        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+      ),
+      child: Text(
+        action,
+        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+      ),
+    ),
+  );
+}
   double investedAmount(
       double monthlyInvestment, double annualInterestRate, int years) {
     double amountInvested = monthlyInvestment * years * 12;
@@ -115,10 +131,10 @@ class _CagrscreenState extends State<Cagrscreen> {
               ),
             ),
             const SizedBox(height: 30),
-            TextButton(
+            /* TextButton(
               onPressed: _calculate,
               child: const Text("Calculate my wealth"),
-            ),
+            ) */customTextButton('Calculate CAGR ',_calculate),
             const SizedBox(height: 30),
             Text('CAGR: ${_overallGrowth.toStringAsFixed(2)}%'),
             const SizedBox(height: 30),
