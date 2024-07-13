@@ -1,5 +1,3 @@
-//import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
-
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -7,72 +5,54 @@ class TimeDurationRegularScreen extends StatefulWidget {
   const TimeDurationRegularScreen({Key? key}) : super(key: key);
 
   @override
-  State<TimeDurationRegularScreen> createState() =>
-      _TimeDurationRegularScreen();
+  State<TimeDurationRegularScreen> createState() => _TimeDurationRegularScreen();
 }
 
 class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
-  final TextEditingController _monthlyInvestmentController =
-      TextEditingController();
-  final TextEditingController _annualInterestRateController =
-      TextEditingController();
-  //final TextEditingController _monthsController = TextEditingController();
-  final TextEditingController _targetedWealthController =
-      TextEditingController();
-  final TextEditingController _yearsController = TextEditingController();
-  final TextEditingController _inflationController = TextEditingController();
-  final TextEditingController _initialInvestmentController =
-      TextEditingController();
-  final TextEditingController _expectedReturnController =
-      TextEditingController();
+  final TextEditingController _monthlyInvestmentController = TextEditingController();
+  final TextEditingController _annualInterestRateController = TextEditingController();
+  final TextEditingController _targetedWealthController = TextEditingController();
+  final TextEditingController _initialInvestmentController = TextEditingController();
   double timeYears = 0.0;
-  double calculateYears(double targetedWealth, double monthlyInvestment,
-      double annualInterestRate) {
-    double years = 0.0;
-    double num =
-        (targetedWealth * annualInterestRate / 1200 + monthlyInvestment) /
-            monthlyInvestment;
-    years = log(num) / (12 * log(1 + annualInterestRate / 1200));
+
+  double calculateYears(double targetedWealth, double monthlyInvestment, double annualInterestRate) {
+    double num = (targetedWealth * annualInterestRate / 1200 + monthlyInvestment) / monthlyInvestment;
+    double years = log(num) / (12 * log(1 + annualInterestRate / 1200));
     return years;
   }
 
   void _calculate() {
     double targetedWealth = double.parse(_targetedWealthController.text);
-    double annualInterestRate =
-        double.parse(_annualInterestRateController.text);
-    //int years = int.parse(_yearsController.text);
-    double initialInvestment = double.parse(_initialInvestmentController.text);
+    double annualInterestRate = double.parse(_annualInterestRateController.text);
+    double monthlyInvestment = double.parse(_monthlyInvestmentController.text);
+
     setState(() {
-      timeYears =
-          calculateYears(targetedWealth, initialInvestment, annualInterestRate);
+      timeYears = calculateYears(targetedWealth, monthlyInvestment, annualInterestRate);
     });
   }
 
   void reset() {
-    (_targetedWealthController.clear());
-    (_expectedReturnController.clear());
-    (_monthlyInvestmentController.clear());
-    (_inflationController.clear());
+    _targetedWealthController.clear();
+    _annualInterestRateController.clear();
+    _monthlyInvestmentController.clear();
+    _initialInvestmentController.clear();
     setState(() {
       timeYears = 0.0;
     });
   }
 
-  Widget customTextButton(String action, VoidCallback onTap,
-      {double width = 150.0}) {
+  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
     return Container(
       width: 230,
       child: TextButton(
         onPressed: onTap,
         style: ButtonStyle(
-          backgroundColor:
-              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
-          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+          backgroundColor: MaterialStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
         ),
         child: Text(
           action,
-          style:
-              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+          style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
         ),
       ),
     );
@@ -130,24 +110,7 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
                       color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
-                  hintText: "Mothly Investment",
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                ),
-                keyboardType: TextInputType.number,
-              ),
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-              width: 300,
-              child: TextField(
-                controller: _yearsController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(249, 0, 114, 188),
-                    ),
-                  ),
-                  hintText: "Adjust for inflation",
+                  hintText: "Monthly Investment",
                   contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                 ),
                 keyboardType: TextInputType.number,
@@ -158,8 +121,7 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
             const SizedBox(height: 30),
             customTextButton('Reset', reset),
             const SizedBox(height: 30),
-            Text(
-                'Total Investment Period: ${timeYears.toStringAsFixed(2)} Years'),
+            Text('Total Investment Period: ${timeYears.toStringAsFixed(2)} Years'),
             const SizedBox(height: 30),
           ],
         ),
