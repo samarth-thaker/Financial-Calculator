@@ -9,7 +9,7 @@ class RDscreen extends StatefulWidget {
 }
 
 class _RDscreenState extends State<RDscreen> {
-  final TextEditingController _principalController = TextEditingController();
+  final TextEditingController _monthlyInvestment = TextEditingController();
   final TextEditingController _annualInterestRateController =
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
@@ -18,19 +18,31 @@ class _RDscreenState extends State<RDscreen> {
   double _amountInvested = 0.0;
   double _earnings = 0.0;
 
- double rdMaturity(double monthlyDeposit, double annualInterestRate, int years) {
-    double monthlyRate = (annualInterestRate / 100) / 12; // Monthly interest rate
+  double rdMaturity(
+      double monthlyDeposit, double annualInterestRate, int years) {
+    double monthlyRate =
+        (annualInterestRate / 100) / 12; // Monthly interest rate
     int months = years * 12; // Total number of months
 
     double maturityValue = 0;
 
     for (int i = 0; i < months; i++) {
-        maturityValue += monthlyDeposit * pow(1 + monthlyRate, months - i);
+      maturityValue += monthlyDeposit * pow(1 + monthlyRate, months - i);
     }
 
     return maturityValue;
-}
+  }
 
+  void reset() {
+    _monthlyInvestment.clear();
+    _annualInterestRateController.clear();
+    _yearsController.clear();
+    setState(() {
+      _amountInvested = 0.0;
+      _maturityValue = 0.0;
+      _earnings = 0.0;
+    });
+  }
 
   double investedAmount(
       double monthlyInvestment, double annualInterestRate, int years) {
@@ -39,40 +51,43 @@ class _RDscreenState extends State<RDscreen> {
   }
 
   double amountEarned(double p, double annualInterestRate, int years) {
-    return rdMaturity(p, annualInterestRate, years) - investedAmount(p, annualInterestRate, years);
+    return rdMaturity(p, annualInterestRate, years) -
+        investedAmount(p, annualInterestRate, years);
   }
 
   void _calculate() {
-    double principal = double.parse(_principalController.text);
+    double principal = double.parse(_monthlyInvestment.text);
     double annualInterestRate =
         double.parse(_annualInterestRateController.text);
     int years = int.parse(_yearsController.text);
 
     setState(() {
-      _maturityValue =
-          rdMaturity(principal, annualInterestRate, years);
-      _amountInvested =
-          investedAmount(principal, annualInterestRate, years);
+      _maturityValue = rdMaturity(principal, annualInterestRate, years);
+      _amountInvested = investedAmount(principal, annualInterestRate, years);
       _earnings = amountEarned(principal, annualInterestRate, years);
     });
   }
-  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
-  return Container(
-    width: 200,
-    
-    child: TextButton(
-      onPressed: onTap,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+
+  Widget customTextButton(String action, VoidCallback onTap,
+      {double width = 150.0}) {
+    return Container(
+      width: 200,
+      child: TextButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+        ),
+        child: Text(
+          action,
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+        ),
       ),
-      child: Text(
-        action,
-        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
-      ),
-    ),
-  );
-}
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +99,7 @@ class _RDscreenState extends State<RDscreen> {
             SizedBox(
               width: 300,
               child: TextField(
-                controller: _principalController,
+                controller: _monthlyInvestment,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -136,7 +151,9 @@ class _RDscreenState extends State<RDscreen> {
               onPressed: _calculate,
               child: const Text("Calculate my wealth"),
             ) */
-           customTextButton("Calculate my wealth", _calculate),
+            customTextButton("Calculate my wealth", _calculate),
+            const SizedBox(height: 30),
+            customTextButton('Reset', reset),
             const SizedBox(height: 30),
             Text('Maturity value: Rs. ${_maturityValue.toStringAsFixed(2)}'),
             const SizedBox(height: 30),

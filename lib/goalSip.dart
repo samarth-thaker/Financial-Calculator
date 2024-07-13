@@ -18,7 +18,7 @@ class _SIPGoalScreen extends State<SIPGoal> {
       TextEditingController();
   final TextEditingController _inflationController = TextEditingController();
 
- // double _maturityValue = 0.0;
+  // double _maturityValue = 0.0;
   //double _amountInvested = 0.0;
   //double _earnings = 0.0;
   double _investmentPerMonth = 0.0;
@@ -66,23 +66,37 @@ class _SIPGoalScreen extends State<SIPGoal> {
       //_earnings = amountEarned(monthlyInvestment, annualInterestRate, years);
     });
   }
-  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
-  return Container(
-    width: 150,
-    
-    child: TextButton(
-      onPressed: onTap,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+
+  Widget customTextButton(String action, VoidCallback onTap,
+      {double width = 150.0}) {
+    return Container(
+      width: 150,
+      child: TextButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+        ),
+        child: Text(
+          action,
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 24),
+        ),
       ),
-      child: Text(
-        action,
-        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 24),
-      ),
-    ),
-  );
-}
+    );
+  }
+
+  void reset() {
+    (_annualInterestRateController.clear());
+    (_targetedWealthController.clear());
+    (_yearsController.clear());
+    (_inflationController.clear());
+    setState(() {
+      _investmentPerMonth = 0.0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,10 +179,12 @@ class _SIPGoalScreen extends State<SIPGoal> {
             ) */
             customTextButton("Plan SIP Goal", _calculate),
             const SizedBox(height: 30),
+            customTextButton("Reset", reset),
+            const SizedBox(height: 30),
             Text(
                 'Monthly Investment Required: Rs. ${_investmentPerMonth.toStringAsFixed(2)}'),
             const SizedBox(height: 30),
-           /*  Text('Amount invested: Rs. ${_amountInvested.toStringAsFixed(2)}'),
+            /*  Text('Amount invested: Rs. ${_amountInvested.toStringAsFixed(2)}'),
             const SizedBox(height: 30),
             Text('Earnings: Rs. ${_earnings.toStringAsFixed(2)}'), */
           ],

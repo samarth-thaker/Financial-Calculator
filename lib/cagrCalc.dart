@@ -9,8 +9,7 @@ class Cagrscreen extends StatefulWidget {
 }
 
 class _CagrscreenState extends State<Cagrscreen> {
-  final TextEditingController _principalController =
-      TextEditingController();
+  final TextEditingController _principalController = TextEditingController();
   final TextEditingController _annualInterestRateController =
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
@@ -20,32 +19,35 @@ class _CagrscreenState extends State<Cagrscreen> {
   /* double _amountInvested = 0.0;
   double _earnings = 0.0; */
 
-  double calculateCAGR(
-      double i, double f, int years) {
-   /*  double monthlyRate =
+  double calculateCAGR(double i, double f, int years) {
+    /*  double monthlyRate =
         (annualInterestRate / 100) / 12; */ // Monthly interest rate
-    /* int months = years * 12;  */// Total number of months
+    /* int months = years * 12;  */ // Total number of months
 
-    double per = pow(f/i, 1/years)-1;
+    double per = pow(f / i, 1 / years) - 1;
     return per;
   }
-Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
-  return Container(
-    width: 200,
-    
-    child: TextButton(
-      onPressed: onTap,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+
+  Widget customTextButton(String action, VoidCallback onTap,
+      {double width = 150.0}) {
+    return Container(
+      width: 200,
+      child: TextButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+        ),
+        child: Text(
+          action,
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+        ),
       ),
-      child: Text(
-        action,
-        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
-      ),
-    ),
-  );
-}
+    );
+  }
+
   double investedAmount(
       double monthlyInvestment, double annualInterestRate, int years) {
     double amountInvested = monthlyInvestment * years * 12;
@@ -64,11 +66,19 @@ Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0
     int years = int.parse(_yearsController.text);
 
     setState(() {
-      _overallGrowth =
-          calculateCAGR(principal, annualInterestRate, years);
+      _overallGrowth = calculateCAGR(principal, annualInterestRate, years);
       /* _amountInvested =
           investedAmount(monthlyInvestment, annualInterestRate, years);
       _earnings = amountEarned(monthlyInvestment, annualInterestRate, years); */
+    });
+  }
+
+  void reset() {
+    _principalController.clear();
+    _annualInterestRateController.clear();
+    _yearsController.clear();
+    setState(() {
+      _overallGrowth = 0.0;
     });
   }
 
@@ -131,10 +141,9 @@ Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0
               ),
             ),
             const SizedBox(height: 30),
-            /* TextButton(
-              onPressed: _calculate,
-              child: const Text("Calculate my wealth"),
-            ) */customTextButton('Calculate CAGR ',_calculate),
+            customTextButton('Calculate CAGR ', _calculate),
+            const SizedBox(height: 30),
+            customTextButton('Reset', reset),
             const SizedBox(height: 30),
             Text('CAGR: ${_overallGrowth.toStringAsFixed(2)}%'),
             const SizedBox(height: 30),

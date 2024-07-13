@@ -44,24 +44,38 @@ class _SIPscreenState extends State<SIPscreen> {
     return calculateSIPMaturity(monthlyInvestment, annualInterestRate, years) -
         investedAmount(monthlyInvestment, annualInterestRate, years);
   }
+
   /* void reset(){} */
-  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
-  return Container(
-    width: 150,
-    
-    child: TextButton(
-      onPressed: onTap,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+  Widget customTextButton(String action, VoidCallback onTap,
+      {double width = 150.0}) {
+    return Container(
+      width: 150,
+      child: TextButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+        ),
+        child: Text(
+          action,
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 24),
+        ),
       ),
-      child: Text(
-        action,
-        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 24),
-      ),
-    ),
-  );
-}
+    );
+  }
+
+  void reset() {
+    (_monthlyInvestmentController.clear());
+    (_annualInterestRateController.clear());
+    (_yearsController.clear());
+    setState(() {
+      _maturityValue = 0.0;
+      _amountInvested = 0.0;
+      _earnings = 0.0;
+    });
+  }
 
   void _calculate() {
     double monthlyInvestment = double.parse(_monthlyInvestmentController.text);
@@ -137,11 +151,9 @@ class _SIPscreenState extends State<SIPscreen> {
               ),
             ),
             const SizedBox(height: 30),
-            /* TextButton(
-              onPressed: _calculate,
-              child: const Text("Calculate my wealth"),
-            ), */
             customTextButton('Calculate', _calculate),
+            const SizedBox(height: 30),
+            customTextButton('Reset', reset),
             const SizedBox(height: 30),
             Text('Maturity value: Rs. ${_maturityValue.toStringAsFixed(2)}'),
             const SizedBox(height: 30),

@@ -13,11 +13,12 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
       TextEditingController();
   final TextEditingController _annualInterestRateController =
       TextEditingController();
-  //final TextEditingController _monthsController = TextEditingController();
+  final TextEditingController _expectedReturnController =
+      TextEditingController();
   final TextEditingController _targetedWealthController =
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
-  //final TextEditingController _inflationController = TextEditingController();
+  final TextEditingController _inflationController = TextEditingController();
   final TextEditingController _initialInvestmentController =
       TextEditingController();
   double timeYears = 0.0;
@@ -40,29 +41,43 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
           calculateYears(targetedWealth, initialInvestment, annualInterestRate);
     });
   }
-  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
-  return Container(
-    width: 230,
-    
-    child: TextButton(
-      onPressed: onTap,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+
+  void reset() {
+    (_targetedWealthController.clear());
+    (_expectedReturnController.clear());
+    (_monthlyInvestmentController.clear());
+    (_inflationController.clear());
+    setState(() {
+      timeYears = 0.0;
+    });
+  }
+
+  Widget customTextButton(String action, VoidCallback onTap,
+      {double width = 150.0}) {
+    return Container(
+      width: 230,
+      child: TextButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+        ),
+        child: Text(
+          action,
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+        ),
       ),
-      child: Text(
-        action,
-        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
-      ),
-    ),
-  );
-}
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Time Duration - One Time")),
       body: Padding(
-        padding:  EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           children: [
             SizedBox(
@@ -72,7 +87,7 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color.fromARGB(249, 0, 114, 188) ,
+                      color: Color.fromARGB(249, 0, 114, 188),
                     ),
                   ),
                   hintText: "Targeted Wealth (in Rs.)",
@@ -133,16 +148,13 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
               ),
             ),
             const SizedBox(height: 30),
-            /* TextButton(
-              onPressed: _calculate,
-              child: const Text("Calculate Time Duration"),
-            ) */
-           customTextButton("Calculate Time Duration", _calculate),
+            customTextButton("Calculate Time Duration", _calculate),
+            const SizedBox(height: 30),
+            customTextButton("Reset", reset),
             const SizedBox(height: 30),
             Text(
                 'Total Investment Period: ${timeYears.toStringAsFixed(2)} Years'),
             const SizedBox(height: 30),
-            
           ],
         ),
       ),

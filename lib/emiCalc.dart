@@ -10,7 +10,8 @@ class EmiScreen extends StatefulWidget {
 
 class _EmiScreenState extends State<EmiScreen> {
 /*   final TextEditingController _emiController = TextEditingController();
- */  final TextEditingController _annualInterestRateController =
+ */
+  final TextEditingController _annualInterestRateController =
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
   final TextEditingController _principalController = TextEditingController();
@@ -58,23 +59,36 @@ class _EmiScreenState extends State<EmiScreen> {
       /* _earnings = amountEarned(monthlyInvestment, annualInterestRate, years); */
     });
   }
-  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
-  return Container(
-    width: 175,
-    
-    child: TextButton(
-      onPressed: onTap,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+
+  Widget customTextButton(String action, VoidCallback onTap,
+      {double width = 150.0}) {
+    return Container(
+      width: 175,
+      child: TextButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+        ),
+        child: Text(
+          action,
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 24),
+        ),
       ),
-      child: Text(
-        action,
-        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 24),
-      ),
-    ),
-  );
-}
+    );
+  }
+
+  void reset() {
+    _principalController.clear();
+    _annualInterestRateController.clear();
+    _yearsController.clear();
+    setState(() {
+      _emi = 0.0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,7 +148,9 @@ class _EmiScreenState extends State<EmiScreen> {
               ),
             ),
             const SizedBox(height: 30),
-           customTextButton('Calculate EMI', _calculate),
+            customTextButton('Calculate EMI', _calculate),
+            const SizedBox(height: 30),
+            customTextButton('Reset', reset),
             const SizedBox(height: 30),
             Text('EMI: Rs. ${_emi.toStringAsFixed(2)}'),
             const SizedBox(height: 30),

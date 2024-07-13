@@ -9,8 +9,7 @@ class Lumpsumscreen extends StatefulWidget {
 }
 
 class _LumpsumscreenState extends State<Lumpsumscreen> {
-  final TextEditingController _principalController =
-      TextEditingController();
+  final TextEditingController _principalController = TextEditingController();
   final TextEditingController _annualInterestRateController =
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
@@ -22,9 +21,9 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
 
   double calculateLumpsumMaturity(
       double p, double annualInterestRate, int years) {
-   /*  double monthlyRate =
+    /*  double monthlyRate =
         (annualInterestRate / 100) / 12; */ // Monthly interest rate
-    /* int months = years * 12;  */// Total number of months
+    /* int months = years * 12;  */ // Total number of months
 
     double maturityValue = p * pow((1 + annualInterestRate / 100), years);
     return maturityValue;
@@ -36,8 +35,7 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
     return amountInvested;
   }
 
-  double amountEarned(
-      double p, double annualInterestRate, int years) {
+  double amountEarned(double p, double annualInterestRate, int years) {
     return calculateLumpsumMaturity(p, annualInterestRate, years) - p;
   }
 
@@ -50,28 +48,37 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
     setState(() {
       _maturityValue =
           calculateLumpsumMaturity(principal, annualInterestRate, years);
-      /* _amountInvested =
-          investedAmount(monthlyInvestment, annualInterestRate, years);
-      _earnings = amountEarned(monthlyInvestment, annualInterestRate, years); */
     });
   }
-    Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
-  return Container(
-    width: 200,
-    
-    child: TextButton(
-      onPressed: onTap,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+
+  void reset() {
+    (_principalController.clear());
+    (_annualInterestRateController.clear());
+    (_yearsController.clear());
+    setState(() {
+      _maturityValue = 0.0;
+    });
+  }
+
+  Widget customTextButton(String action, VoidCallback onTap,
+      {double width = 150.0}) {
+    return Container(
+      width: 200,
+      child: TextButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+        ),
+        child: Text(
+          action,
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+        ),
       ),
-      child: Text(
-        action,
-        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
-      ),
-    ),
-  );
-}
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,11 +139,9 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
               ),
             ),
             const SizedBox(height: 30),
-            /* TextButton(
-              onPressed: _calculate,
-              child: const Text("Calculate my wealth"),
-            ), */
             customTextButton("Calcualte my wealth", _calculate),
+            const SizedBox(height: 30),
+            customTextButton('Reset', reset),
             const SizedBox(height: 30),
             Text('Maturity value: Rs. ${_maturityValue.toStringAsFixed(2)}'),
             const SizedBox(height: 30),

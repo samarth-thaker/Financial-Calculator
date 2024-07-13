@@ -1,3 +1,5 @@
+//import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -5,7 +7,8 @@ class TimeDurationRegularScreen extends StatefulWidget {
   const TimeDurationRegularScreen({Key? key}) : super(key: key);
 
   @override
-  State<TimeDurationRegularScreen> createState() => _TimeDurationRegularScreen();
+  State<TimeDurationRegularScreen> createState() =>
+      _TimeDurationRegularScreen();
 }
 
 class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
@@ -17,16 +20,19 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
   final TextEditingController _targetedWealthController =
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
-  //final TextEditingController _inflationController = TextEditingController();
+  final TextEditingController _inflationController = TextEditingController();
   final TextEditingController _initialInvestmentController =
+      TextEditingController();
+  final TextEditingController _expectedReturnController =
       TextEditingController();
   double timeYears = 0.0;
   double calculateYears(double targetedWealth, double monthlyInvestment,
       double annualInterestRate) {
     double years = 0.0;
     double num =
-        (targetedWealth * annualInterestRate / 1200 + monthlyInvestment) / monthlyInvestment;
-    years = log(num) / (12*log( 1 + annualInterestRate/1200));
+        (targetedWealth * annualInterestRate / 1200 + monthlyInvestment) /
+            monthlyInvestment;
+    years = log(num) / (12 * log(1 + annualInterestRate / 1200));
     return years;
   }
 
@@ -41,23 +47,37 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
           calculateYears(targetedWealth, initialInvestment, annualInterestRate);
     });
   }
-  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
-  return Container(
-    width: 230,
-    
-    child: TextButton(
-      onPressed: onTap,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+
+  void reset() {
+    (_targetedWealthController.clear());
+    (_expectedReturnController.clear());
+    (_monthlyInvestmentController.clear());
+    (_inflationController.clear());
+    setState(() {
+      timeYears = 0.0;
+    });
+  }
+
+  Widget customTextButton(String action, VoidCallback onTap,
+      {double width = 150.0}) {
+    return Container(
+      width: 230,
+      child: TextButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+        ),
+        child: Text(
+          action,
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+        ),
       ),
-      child: Text(
-        action,
-        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
-      ),
-    ),
-  );
-}
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,11 +154,9 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
               ),
             ),
             const SizedBox(height: 30),
-           /*  TextButton(
-              onPressed: _calculate,
-              child: const Text("Calculate Time Duration"),
-            ) */
-           customTextButton('Calculate Time Duration', _calculate),
+            customTextButton('Calculate Time Duration', _calculate),
+            const SizedBox(height: 30),
+            customTextButton('Reset', reset),
             const SizedBox(height: 30),
             Text(
                 'Total Investment Period: ${timeYears.toStringAsFixed(2)} Years'),

@@ -42,12 +42,12 @@ class _UPscreenState extends State<UPscreen> {
   double investedAmount(double monthlyInvestment, double annualInterestRate,
       int years, double s) {
     double amountInvested = 0;
-   for (int year = 0; year < years; year++) {
-        for (int month = 0; month < 12; month++) {
-            amountInvested += monthlyInvestment;
-        }
-        // Increase the monthly investment amount by the step-up percentage
-        monthlyInvestment += monthlyInvestment * (s / 100);
+    for (int year = 0; year < years; year++) {
+      for (int month = 0; month < 12; month++) {
+        amountInvested += monthlyInvestment;
+      }
+      // Increase the monthly investment amount by the step-up percentage
+      monthlyInvestment += monthlyInvestment * (s / 100);
     }
     return amountInvested;
   }
@@ -68,28 +68,43 @@ class _UPscreenState extends State<UPscreen> {
     setState(() {
       _maturityValue =
           calculateSIPMaturity(monthlyInvestment, annualInterestRate, years, s);
-       _amountInvested =
+      _amountInvested =
           investedAmount(monthlyInvestment, annualInterestRate, years, s);
       _earnings = amountEarned(monthlyInvestment, annualInterestRate, years, s);
     });
   }
-    Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
-  return Container(
-    width: 200,
-    
-    child: TextButton(
-      onPressed: onTap,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+
+  Widget customTextButton(String action, VoidCallback onTap,
+      {double width = 150.0}) {
+    return Container(
+      width: 200,
+      child: TextButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+        ),
+        child: Text(
+          action,
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+        ),
       ),
-      child: Text(
-        action,
-        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
-      ),
-    ),
-  );
-}
+    );
+  }
+
+  void reset() {
+    _monthlyInvestmentController.clear();
+    _stepUpController.clear();
+    _annualInterestRateController.clear();
+    _yearsController.clear();
+    setState(() {
+      _maturityValue = 0.0;
+      _earnings = 0.0;
+      _amountInvested = 0.0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,11 +182,9 @@ class _UPscreenState extends State<UPscreen> {
               ),
             ),
             const SizedBox(height: 30),
-           /*  TextButton(
-              onPressed: _calculate,
-              child: const Text("Calculate my wealth"),
-            ) */
             customTextButton('Calculate my wealth', _calculate),
+            const SizedBox(height: 30),
+            customTextButton('Reset', reset),
             const SizedBox(height: 30),
             Text('Maturity value: Rs. ${_maturityValue.toStringAsFixed(2)}'),
             const SizedBox(height: 30),

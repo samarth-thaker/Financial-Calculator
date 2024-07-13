@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class FireScreen extends StatefulWidget {
-  const FireScreen ({super.key});
+  const FireScreen({super.key});
 
   @override
   State<FireScreen> createState() => _FIREState();
@@ -51,23 +51,26 @@ class _FIREState extends State<FireScreen> {
   /* double lean(double monthlyExpense) {
     return monthlyExpense * 12 * 20;
   } */
-Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
-  return Container(
-    width: 200,
-    
-    child: TextButton(
-      onPressed: onTap,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+  Widget customTextButton(String action, VoidCallback onTap,
+      {double width = 150.0}) {
+    return Container(
+      width: 200,
+      child: TextButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+        ),
+        child: Text(
+          action,
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+        ),
       ),
-      child: Text(
-        action,
-        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
-      ),
-    ),
-  );
-}
+    );
+  }
+
   void calculate() {
     double monthlyExpense =
         double.tryParse(_monthlyExpenseController.text) ?? 0.0;
@@ -81,6 +84,19 @@ Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0
           future(monthlyExpense, currentAge, retirementAge, inflation);
       fatFire = fat(monthlyExpense, currentAge, retirementAge, inflation);
       fire = fireNumber(monthlyExpense, currentAge, retirementAge, inflation);
+    });
+  }
+
+  void reset() {
+    _monthlyExpenseController.clear();
+    _currentAgeController.clear();
+    _retirementAgeController.clear();
+    _inflationRateController.clear();
+    setState(() {
+      expenseToday = 0.0;
+      expenseInFuture = 0.0;
+      fatFire = 0.0;
+      fire = 0.0;
     });
   }
 
@@ -162,7 +178,9 @@ Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0
               ),
             ),
             const SizedBox(height: 30),
-           customTextButton("Calculate my fire", calculate),
+            customTextButton("Calculate my fire", calculate),
+            const SizedBox(height: 30),
+            customTextButton("Reset", reset),
             const SizedBox(height: 30),
             Text('Expense today: Rs. ${expenseToday.toStringAsFixed(2)}'),
             const SizedBox(height: 30),

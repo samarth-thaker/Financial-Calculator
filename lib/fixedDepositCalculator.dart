@@ -8,8 +8,7 @@ class FDscreen extends StatefulWidget {
 }
 
 class _FDscreenState extends State<FDscreen> {
-  final TextEditingController _principalController =
-      TextEditingController();
+  final TextEditingController _principalController = TextEditingController();
   final TextEditingController _annualInterestRateController =
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
@@ -19,9 +18,8 @@ class _FDscreenState extends State<FDscreen> {
   /* double _amountInvested = 0.0;
   double _earnings = 0.0; */
 
-  double fdMaturity(
-      double p, double annualInterestRate, int years) {
-    double maturityValue = p + ((p*annualInterestRate*years)/100);
+  double fdMaturity(double p, double annualInterestRate, int years) {
+    double maturityValue = p + ((p * annualInterestRate * years) / 100);
     return maturityValue;
   }
 
@@ -31,8 +29,7 @@ class _FDscreenState extends State<FDscreen> {
     return amountInvested;
   }
 
-  double amountEarned(
-      double p, double annualInterestRate, int years) {
+  double amountEarned(double p, double annualInterestRate, int years) {
     return fdMaturity(p, annualInterestRate, years) - p;
   }
 
@@ -43,30 +40,42 @@ class _FDscreenState extends State<FDscreen> {
     int years = int.parse(_yearsController.text);
 
     setState(() {
-      _maturityValue =
-          fdMaturity(principal, annualInterestRate, years);
+      _maturityValue = fdMaturity(principal, annualInterestRate, years);
       /* _amountInvested =
           investedAmount(monthlyInvestment, annualInterestRate, years);
       _earnings = amountEarned(monthlyInvestment, annualInterestRate, years); */
     });
   }
-  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
-  return Container(
-    width: 200,
-    
-    child: TextButton(
-      onPressed: onTap,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)), 
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)), 
+
+  void reset() {
+    _principalController.clear();
+    _annualInterestRateController.clear();
+    _yearsController.clear();
+    setState(() {
+      _maturityValue = 0.0;
+    });
+  }
+
+  Widget customTextButton(String action, VoidCallback onTap,
+      {double width = 150.0}) {
+    return Container(
+      width: 200,
+      child: TextButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+        ),
+        child: Text(
+          action,
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+        ),
       ),
-      child: Text(
-        action,
-        style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
-      ),
-    ),
-  );
-}
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,7 +138,10 @@ class _FDscreenState extends State<FDscreen> {
             /* TextButton(
               onPressed: _calculate,
               child: const Text("Calculate my wealth"),
-            ) */customTextButton("Calculate my Wealth", _calculate),
+            ) */
+            customTextButton("Calculate my Wealth", _calculate),
+            const SizedBox(height: 30),
+            customTextButton("Reset", reset),
             const SizedBox(height: 30),
             Text('Maturity value: Rs. ${_maturityValue.toStringAsFixed(2)}'),
             const SizedBox(height: 30),
