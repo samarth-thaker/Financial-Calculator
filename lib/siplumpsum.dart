@@ -43,10 +43,10 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
     });
   }
 
-  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
+  Widget customTextButton(String action, VoidCallback onTap, double buttonWidth, {double width = 150.0}) {
     return Container(
-      width: width,
-      width: width,
+      width: buttonWidth,
+      
       child: TextButton(
         onPressed: onTap,
         style: ButtonStyle(
@@ -123,10 +123,10 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
               ),
             ),
             const SizedBox(height: 30),
-            customTextButton("Calculate my wealth", _calculate, width: buttonWidth),
+            customTextButton("Calculate my wealth", _calculate,  buttonWidth),
             const SizedBox(height: 30),
-            customTextButton('Reset', reset, width: buttonWidth),
-            customTextButton('Reset', reset, width: buttonWidth),
+            customTextButton('Reset', reset, buttonWidth),
+            customTextButton('Reset', reset, buttonWidth),
             const SizedBox(height: 30),
             Text('Maturity value: Rs. ${_maturityValue.toStringAsFixed(2)}'),
           ],
