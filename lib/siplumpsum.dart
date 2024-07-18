@@ -63,7 +63,7 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
   Widget customTextButton(String action, VoidCallback onTap,
       {double width = 150.0}) {
     return Container(
-      width: 200,
+      width: width,
       child: TextButton(
         onPressed: onTap,
         style: ButtonStyle(
@@ -82,6 +82,8 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double buttonWidth = screenWidth * 0.8;
     return Scaffold(
       appBar: AppBar(title: const Text("Lumpsum SIP Calculator")),
       body: Padding(
@@ -139,9 +141,9 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
               ),
             ),
             const SizedBox(height: 30),
-            customTextButton("Calcualte my wealth", _calculate),
+            customTextButton("Calcualte my wealth", _calculate, width: buttonWidth),
             const SizedBox(height: 30),
-            customTextButton('Reset', reset),
+            customTextButton('Reset', reset, width: buttonWidth),
             const SizedBox(height: 30),
             Text('Maturity value: Rs. ${_maturityValue.toStringAsFixed(2)}'),
             const SizedBox(height: 30),
