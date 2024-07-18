@@ -5,29 +5,39 @@ class TimeDurationRegularScreen extends StatefulWidget {
   const TimeDurationRegularScreen({Key? key}) : super(key: key);
 
   @override
-  State<TimeDurationRegularScreen> createState() => _TimeDurationRegularScreen();
+  State<TimeDurationRegularScreen> createState() =>
+      _TimeDurationRegularScreen();
 }
 
 class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
-  final TextEditingController _monthlyInvestmentController = TextEditingController();
-  final TextEditingController _annualInterestRateController = TextEditingController();
-  final TextEditingController _targetedWealthController = TextEditingController();
-  final TextEditingController _initialInvestmentController = TextEditingController();
+  final TextEditingController _monthlyInvestmentController =
+      TextEditingController();
+  final TextEditingController _annualInterestRateController =
+      TextEditingController();
+  final TextEditingController _targetedWealthController =
+      TextEditingController();
+  final TextEditingController _initialInvestmentController =
+      TextEditingController();
   double timeYears = 0.0;
 
-  double calculateYears(double targetedWealth, double monthlyInvestment, double annualInterestRate) {
-    double num = (targetedWealth * annualInterestRate / 1200 + monthlyInvestment) / monthlyInvestment;
+  double calculateYears(double targetedWealth, double monthlyInvestment,
+      double annualInterestRate) {
+    double num =
+        (targetedWealth * annualInterestRate / 1200 + monthlyInvestment) /
+            monthlyInvestment;
     double years = log(num) / (12 * log(1 + annualInterestRate / 1200));
     return years;
   }
 
   void _calculate() {
     double targetedWealth = double.parse(_targetedWealthController.text);
-    double annualInterestRate = double.parse(_annualInterestRateController.text);
+    double annualInterestRate =
+        double.parse(_annualInterestRateController.text);
     double monthlyInvestment = double.parse(_monthlyInvestmentController.text);
 
     setState(() {
-      timeYears = calculateYears(targetedWealth, monthlyInvestment, annualInterestRate);
+      timeYears =
+          calculateYears(targetedWealth, monthlyInvestment, annualInterestRate);
     });
   }
 
@@ -41,14 +51,14 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
     });
   }
 
-  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
+  Widget customTextButton(String action, VoidCallback onTap, double buttonWidth, {double width = 150.0}) {
     return Container(
-      width: 230,
+      width: buttonWidth,
       child: TextButton(
         onPressed: onTap,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
-          padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+          backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
         ),
         child: Text(
           action,
@@ -60,6 +70,8 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double buttonWidth = screenWidth * 0.8;
     return Scaffold(
       appBar: AppBar(title: const Text("Time Duration - Regular")),
       body: Padding(
@@ -117,11 +129,13 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            customTextButton('Calculate Time Duration', _calculate),
+            customTextButton(
+                'Calculate Time Duration', _calculate, buttonWidth),
             const SizedBox(height: 30),
-            customTextButton('Reset', reset),
+            customTextButton('Reset', reset, buttonWidth),
             const SizedBox(height: 30),
-            Text('Total Investment Period: ${timeYears.toStringAsFixed(2)} Years'),
+            Text(
+                'Total Investment Period: ${timeYears.toStringAsFixed(2)} Years'),
             const SizedBox(height: 30),
           ],
         ),

@@ -67,21 +67,18 @@ class _SIPGoalScreen extends State<SIPGoal> {
     });
   }
 
-  Widget customTextButton(String action, VoidCallback onTap,
-      {double width = 150.0}) {
+  Widget customTextButton(String action, VoidCallback onTap,double buttonWidth, {double width = 150.0}) {
     return Container(
-      width: 150,
+      width: buttonWidth,
       child: TextButton(
         onPressed: onTap,
         style: ButtonStyle(
-          backgroundColor:
-              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
           padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
         ),
         child: Text(
           action,
-          style:
-              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 24),
+          style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
         ),
       ),
     );
@@ -99,6 +96,8 @@ class _SIPGoalScreen extends State<SIPGoal> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double buttonWidth = screenWidth * 0.8; //
     return Scaffold(
       appBar: AppBar(title: const Text("Goal Planning - SIP")),
       body: Padding(
@@ -177,9 +176,9 @@ class _SIPGoalScreen extends State<SIPGoal> {
               onPressed: _calculate,
               child: const Text("Plan SIP Goal"),
             ) */
-            customTextButton("Plan SIP Goal", _calculate),
+            customTextButton("Plan SIP Goal", _calculate, buttonWidth),
             const SizedBox(height: 30),
-            customTextButton("Reset", reset),
+            customTextButton("Reset", reset, buttonWidth),
             const SizedBox(height: 30),
             Text(
                 'Monthly Investment Required: Rs. ${_investmentPerMonth.toStringAsFixed(2)}'),

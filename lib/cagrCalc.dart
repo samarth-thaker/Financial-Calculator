@@ -28,21 +28,18 @@ class _CagrscreenState extends State<Cagrscreen> {
     return per;
   }
 
-  Widget customTextButton(String action, VoidCallback onTap,
-      {double width = 150.0}) {
+  Widget customTextButton(String action, VoidCallback onTap, double buttonWidth, {double width = 150.0}) {
     return Container(
-      width: 200,
+      width: buttonWidth,
       child: TextButton(
         onPressed: onTap,
         style: ButtonStyle(
-          backgroundColor:
-              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
           padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
         ),
         child: Text(
           action,
-          style:
-              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+          style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
         ),
       ),
     );
@@ -84,7 +81,10 @@ class _CagrscreenState extends State<Cagrscreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double buttonWidth = screenWidth * 0.8; //
     return Scaffold(
+      
       appBar: AppBar(title: const Text("CAGR Calculator")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -141,9 +141,9 @@ class _CagrscreenState extends State<Cagrscreen> {
               ),
             ),
             const SizedBox(height: 30),
-            customTextButton('Calculate CAGR ', _calculate),
+            customTextButton('Calculate CAGR ', _calculate, buttonWidth),
             const SizedBox(height: 30),
-            customTextButton('Reset', reset),
+            customTextButton('Reset', reset, buttonWidth),
             const SizedBox(height: 30),
             Text('CAGR: ${_overallGrowth.toStringAsFixed(2)}%'),
             const SizedBox(height: 30),

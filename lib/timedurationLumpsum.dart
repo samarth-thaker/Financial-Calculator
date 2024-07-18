@@ -38,14 +38,14 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
     });
   }
 
-  Widget customTextButton(String action, VoidCallback onTap, {double width = 150.0}) {
+  Widget customTextButton(String action, VoidCallback onTap,double buttonWidth, {double width = 150.0}) {
     return Container(
-      width: 230,
+      width: buttonWidth,
       child: TextButton(
         onPressed: onTap,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
-          padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+          backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
         ),
         child: Text(
           action,
@@ -57,6 +57,8 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double buttonWidth = screenWidth * 0.8; //
     return Scaffold(
       appBar: AppBar(title: const Text("Time Duration - One Time")),
       body: Padding(
@@ -114,9 +116,9 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
               ),
             ),
             const SizedBox(height: 30),
-            customTextButton("Calculate Time Duration", _calculate),
+            customTextButton("Calculate Time Duration", _calculate, buttonWidth),
             const SizedBox(height: 30),
-            customTextButton("Reset", reset),
+            customTextButton("Reset", reset, buttonWidth),
             const SizedBox(height: 30),
             Text('Total Investment Period: ${timeYears.toStringAsFixed(2)} Years'),
             const SizedBox(height: 30),

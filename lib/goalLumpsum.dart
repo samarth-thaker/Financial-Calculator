@@ -63,21 +63,18 @@ class _LumpsumscreenState extends State<Goallumpsum> {
     });
   }
 
-  Widget customTextButton(String action, VoidCallback onTap,
-      {double width = 150.0}) {
+  Widget customTextButton(String action, VoidCallback onTap,double buttonWidth, {double width = 150.0}) {
     return Container(
-      width: 150,
+      width: buttonWidth,
       child: TextButton(
         onPressed: onTap,
         style: ButtonStyle(
-          backgroundColor:
-              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
           padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
         ),
         child: Text(
           action,
-          style:
-              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 24),
+          style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
         ),
       ),
     );
@@ -85,6 +82,8 @@ class _LumpsumscreenState extends State<Goallumpsum> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double buttonWidth = screenWidth * 0.8; //
     return Scaffold(
       appBar: AppBar(title: const Text("Goal Panning - Lumpsum ")),
       body: Padding(
@@ -142,9 +141,9 @@ class _LumpsumscreenState extends State<Goallumpsum> {
               ),
             ),
             const SizedBox(height: 30),
-            customTextButton("Plan my goal", _calculate),
+            customTextButton("Plan my goal", _calculate, buttonWidth),
             const SizedBox(height: 30),
-            customTextButton("Reset", reset),
+            customTextButton("Reset", reset, buttonWidth),
             const SizedBox(height: 30),
             Text(
                 'Inflation adjusted targeted wealth: Rs. ${_maturityValue.toStringAsFixed(2)}'),
