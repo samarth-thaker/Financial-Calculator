@@ -158,7 +158,7 @@ class _SIPGoalScreen extends State<SIPGoal> {
             SizedBox(
               width: 300,
               child: TextField(
-                controller: _yearsController,
+                controller: _inflationController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(

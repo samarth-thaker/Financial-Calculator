@@ -25,7 +25,7 @@ class _CagrscreenState extends State<Cagrscreen> {
     /* int months = years * 12;  */ // Total number of months
 
     double per = pow(f / i, 1 / years) - 1;
-    return per;
+    return per*100;
   }
 
   Widget customTextButton(String action, VoidCallback onTap, double buttonWidth, {double width = 150.0}) {

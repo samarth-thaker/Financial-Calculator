@@ -126,7 +126,6 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
             customTextButton("Calculate my wealth", _calculate,  buttonWidth),
             const SizedBox(height: 30),
             customTextButton('Reset', reset, buttonWidth),
-            customTextButton('Reset', reset, buttonWidth),
             const SizedBox(height: 30),
             Text('Maturity value: Rs. ${_maturityValue.toStringAsFixed(2)}'),
           ],
