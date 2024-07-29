@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class FDscreen extends StatefulWidget {
   const FDscreen({Key? key}) : super(key: key);
@@ -81,8 +82,10 @@ class _FDscreenState extends State<FDscreen> {
       appBar: AppBar(title: const Text("Fixed Deposit Calculator")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
+        child: Center(
+          child:SingleChildScrollView(
+            child: Column(
+              children: [
             SizedBox(
               width: 300,
               child: TextField(
@@ -149,7 +152,10 @@ class _FDscreenState extends State<FDscreen> {
             Text('Earnings: Rs. ${_earnings.toStringAsFixed(2)}'),
  */
           ],
-        ),
+
+            ),
+          )
+                  ),
       ),
     );
   }

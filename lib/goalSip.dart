@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:flutter/widgets.dart';
 
 class SIPGoal extends StatefulWidget {
   const SIPGoal({Key? key}) : super(key: key);
@@ -102,8 +105,10 @@ class _SIPGoalScreen extends State<SIPGoal> {
       appBar: AppBar(title: const Text("Goal Planning - SIP")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
+        child: Center(
+          child:SingleChildScrollView(
+            child:Column(
+              children: [
             SizedBox(
               width: 300,
               child: TextField(
@@ -187,7 +192,10 @@ class _SIPGoalScreen extends State<SIPGoal> {
             const SizedBox(height: 30),
             Text('Earnings: Rs. ${_earnings.toStringAsFixed(2)}'), */
           ],
-        ),
+
+            )
+          )
+                  ),
       ),
     );
   }

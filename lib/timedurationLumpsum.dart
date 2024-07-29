@@ -63,8 +63,10 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
       appBar: AppBar(title: const Text("Time Duration - One Time")),
       body: Padding(
         padding: EdgeInsets.all(20.0),
-        child: Column(
-          children: [
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
             SizedBox(
               width: 300,
               child: TextField(
@@ -123,6 +125,8 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
             Text('Total Investment Period: ${timeYears.toStringAsFixed(2)} Years'),
             const SizedBox(height: 30),
           ],
+            ),
+          ),
         ),
       ),
     );

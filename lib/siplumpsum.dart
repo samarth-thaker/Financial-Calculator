@@ -70,8 +70,10 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
       appBar: AppBar(title: const Text("Lumpsum SIP Calculator")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
             SizedBox(
               width: 300,
               child: TextField(
@@ -129,6 +131,9 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
             const SizedBox(height: 30),
             Text('Maturity value: Rs. ${_maturityValue.toStringAsFixed(2)}'),
           ],
+            ),
+          )
+          
         ),
       ),
     );

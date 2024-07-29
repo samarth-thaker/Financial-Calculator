@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:flutter/widgets.dart';
+
 class Cagrscreen extends StatefulWidget {
   const Cagrscreen({Key? key}) : super(key: key);
 
@@ -88,8 +90,10 @@ class _CagrscreenState extends State<Cagrscreen> {
       appBar: AppBar(title: const Text("CAGR Calculator")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
+        child: Center(
+          child:SingleChildScrollView(
+            child: Column(
+              children: [
             SizedBox(
               width: 300,
               child: TextField(
@@ -152,6 +156,9 @@ class _CagrscreenState extends State<Cagrscreen> {
             Text('Earnings: Rs. ${_earnings.toStringAsFixed(2)}'),
  */
           ],
+            ),
+          )
+          
         ),
       ),
     );

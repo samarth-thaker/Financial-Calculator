@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:flutter/widgets.dart';
 
 class SIPscreen extends StatefulWidget {
   const SIPscreen({Key? key}) : super(key: key);
@@ -97,8 +100,10 @@ class _SIPscreenState extends State<SIPscreen> {
       appBar: AppBar(title: const Text("SIP Calculator")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
+        child: Center(
+          child:SingleChildScrollView(
+            child:Column(
+              children: [
             SizedBox(
               width: 300,
               child: TextField(
@@ -160,7 +165,10 @@ class _SIPscreenState extends State<SIPscreen> {
             const SizedBox(height: 30),
             Text('Earnings: Rs. ${_earnings.toStringAsFixed(2)}'),
           ],
-        ),
+
+            )
+          )
+                  ),
       ),
     );
   }

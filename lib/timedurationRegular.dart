@@ -76,8 +76,10 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
       appBar: AppBar(title: const Text("Time Duration - Regular")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
             SizedBox(
               width: 300,
               child: TextField(
@@ -138,6 +140,8 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
                 'Total Investment Period: ${timeYears.toStringAsFixed(2)} Years'),
             const SizedBox(height: 30),
           ],
+            ),
+          ),
         ),
       ),
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:flutter/widgets.dart';
+
 class FireScreen extends StatefulWidget {
   const FireScreen({super.key});
 
@@ -107,8 +109,10 @@ class _FIREState extends State<FireScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
+        child: Center(
+          child:SingleChildScrollView(
+            child: Column(
+              children: [
             SizedBox(
               width: 300,
               child: TextField(
@@ -187,6 +191,9 @@ class _FIREState extends State<FireScreen> {
             const SizedBox(height: 30),
             Text('FAT FIRE: Rs. ${fatFire.toStringAsFixed(2)}'),
           ],
+            ),
+          )
+          
         ),
       ),
     );

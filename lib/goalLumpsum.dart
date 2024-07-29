@@ -63,8 +63,8 @@ class _LumpsumscreenState extends State<Goallumpsum> {
         onPressed: onTap,
         style: ButtonStyle(
           backgroundColor:
-              MaterialStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
-          padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
         ),
         child: Text(
           action,
@@ -82,7 +82,8 @@ class _LumpsumscreenState extends State<Goallumpsum> {
       appBar: AppBar(title: const Text("Goal Planning - Lumpsum ")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
+        child:Center(
+          child: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(
@@ -165,6 +166,8 @@ class _LumpsumscreenState extends State<Goallumpsum> {
             ],
           ),
         ),
+        )
+        
       ),
     );
   }

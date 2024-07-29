@@ -111,8 +111,10 @@ class _UPscreenState extends State<UPscreen> {
       appBar: AppBar(title: const Text("Step Up SIP Calculator")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
             SizedBox(
               width: 300,
               child: TextField(
@@ -191,6 +193,8 @@ class _UPscreenState extends State<UPscreen> {
             const SizedBox(height: 30),
             Text('Earnings: Rs. ${_earnings.toStringAsFixed(2)}'),
           ],
+            ),
+          ),
         ),
       ),
     );
