@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/fixedDepositCalculator': (context) => const FDscreen(),
         '/recDeposit': (context) => const RDscreen(),
         '/stepupSIP': (context) => const UPscreen(),
+        // ignore: equal_keys_in_map
         '/cagrCalc': (context) => const Cagrscreen(),
         '/fireCalculator': (context) => const FireScreen(),
         '/goalLumpsum': (context) => const Goallumpsum(),
