@@ -9,8 +9,6 @@ class SIPGoal extends StatefulWidget {
 }
 
 class _SIPGoalScreen extends State<SIPGoal> {
- /*  final TextEditingController _monthlyInvestmentController =
-      TextEditingController(); */
   final TextEditingController _annualInterestRateController =
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
