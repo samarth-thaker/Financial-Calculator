@@ -1,4 +1,4 @@
-// ignore_for_file: equal_keys_in_map
+
 
 import 'package:flutter/material.dart';
 import 'package:financialcalculator/cagrCalc.dart';
