@@ -14,7 +14,7 @@ class _SIPGoalScreen extends State<SIPGoal> {
   final TextEditingController _yearsController = TextEditingController();
   final TextEditingController _targetedWealthController =
       TextEditingController();
-  final TextEditingController _inflationController = TextEditingController();
+  final TextEditingController _inflationController = TextEditingController()  ;
 
   double _investmentPerMonth = 0.0;
 

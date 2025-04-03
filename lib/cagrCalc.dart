@@ -25,21 +25,24 @@ class _CagrscreenState extends State<Cagrscreen> {
     /* int months = years * 12;  */ // Total number of months
 
     double per = pow(f / i, 1 / years) - 1;
-    return per*100;
+    return per * 100;
   }
 
-  Widget customTextButton(String action, VoidCallback onTap, double buttonWidth, {double width = 150.0}) {
+  Widget customTextButton(String action, VoidCallback onTap, double buttonWidth,
+      {double width = 150.0}) {
     return Container(
       width: buttonWidth,
       child: TextButton(
         onPressed: onTap,
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
+          backgroundColor:
+              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
           padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
         ),
         child: Text(
           action,
-          style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+          style:
+              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
         ),
       ),
     );
@@ -84,76 +87,77 @@ class _CagrscreenState extends State<Cagrscreen> {
     double screenWidth = MediaQuery.of(context).size.width;
     double buttonWidth = screenWidth * 0.8; //
     return Scaffold(
-      
-      appBar: AppBar(title: const Text("CAGR Calculator")),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            SizedBox(
-              width: 300,
-              child: TextField(
-                controller: _principalController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(249, 0, 114, 188),
+        appBar: AppBar(title: const Text("CAGR Calculator")),
+        body: Center(
+          child: SingleChildScrollView(
+              child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 300,
+                  child: TextField(
+                    controller: _principalController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(249, 0, 114, 188),
+                        ),
+                      ),
+                      hintText: "Initial investment (in Rs.)",
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                     ),
+                    keyboardType: TextInputType.number,
                   ),
-                  hintText: "Initial investment (in Rs.)",
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                 ),
-                keyboardType: TextInputType.number,
-              ),
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-              width: 300,
-              child: TextField(
-                controller: _annualInterestRateController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(249, 0, 114, 188),
+                const SizedBox(height: 30),
+                SizedBox(
+                  width: 300,
+                  child: TextField(
+                    controller: _annualInterestRateController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(249, 0, 114, 188),
+                        ),
+                      ),
+                      hintText: "Final investment (in Rs.)",
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                     ),
+                    keyboardType: TextInputType.number,
                   ),
-                  hintText: "Final investment (in Rs.)",
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                 ),
-                keyboardType: TextInputType.number,
-              ),
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-              width: 300,
-              child: TextField(
-                controller: _yearsController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.deepOrange,
+                const SizedBox(height: 30),
+                SizedBox(
+                  width: 300,
+                  child: TextField(
+                    controller: _yearsController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.deepOrange,
+                        ),
+                      ),
+                      hintText: "Time period (upto 50 years)",
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                     ),
+                    keyboardType: TextInputType.number,
                   ),
-                  hintText: "Time period (upto 50 years)",
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                 ),
-                keyboardType: TextInputType.number,
-              ),
-            ),
-            const SizedBox(height: 30),
-            customTextButton('Calculate CAGR ', _calculate, buttonWidth),
-            const SizedBox(height: 30),
-            customTextButton('Reset', reset, buttonWidth),
-            const SizedBox(height: 30),
-            Text('CAGR: ${_overallGrowth.toStringAsFixed(2)}%'),
-            const SizedBox(height: 30),
-            /* Text('Amount invested: Rs. ${_amountInvested.toStringAsFixed(2)}'),
+                const SizedBox(height: 30),
+                customTextButton('Calculate CAGR ', _calculate, buttonWidth),
+                const SizedBox(height: 30),
+                customTextButton('Reset', reset, buttonWidth),
+                const SizedBox(height: 30),
+                Text('CAGR: ${_overallGrowth.toStringAsFixed(2)}%'),
+                const SizedBox(height: 30),
+                /* Text('Amount invested: Rs. ${_amountInvested.toStringAsFixed(2)}'),
             const SizedBox(height: 30),
             Text('Earnings: Rs. ${_earnings.toStringAsFixed(2)}'),
  */
-          ],
-        ),
-      ),
-    );
+              ],
+            ),
+          )),
+        ));
   }
 }
