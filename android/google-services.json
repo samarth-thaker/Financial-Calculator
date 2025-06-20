@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1013318087083",
+    "project_id": "financialcalculator-772f1",
+    "storage_bucket": "financialcalculator-772f1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013318087083:android:79dabb4bae7aca244962ee",
+        "android_client_info": {
+          "package_name": "com.example.financial_calculator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrrV-CLlsqHcmMq-qNIuffyNx1Rbtaqk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013318087083:android:f882917efe511ec64962ee",
+        "android_client_info": {
+          "package_name": "com.example.financialcalculator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrrV-CLlsqHcmMq-qNIuffyNx1Rbtaqk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
