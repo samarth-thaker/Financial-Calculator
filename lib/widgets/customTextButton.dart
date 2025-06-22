@@ -18,14 +18,27 @@ class Custombutton extends StatelessWidget {
       child: TextButton(
         onPressed: onTap,
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
-          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
+          backgroundColor: WidgetStateProperty.all(Colors.deepPurple),
+          padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(vertical: 12),
+          ),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+              side: BorderSide(color: Colors.grey.shade300),
+            ),
+          ),
         ),
-        child: Text(
+        child:  Text(
           action,
-          style: TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
+          style: TextStyle(
+            color: Colors.white, // High contrast text
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
   }
 }
+

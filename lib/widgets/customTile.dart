@@ -17,21 +17,21 @@ class Customtile extends StatelessWidget {
     return ListTile(
       contentPadding:
           const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
-      title: Text(title,
-          style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(249, 250, 200, 20))),
-      leading: Icon(icon, size: 30, color: Color.fromARGB(249, 250, 200, 20)),
-      trailing: const Icon(
-        Icons.arrow_forward_ios,
-        color: Color.fromARGB(249, 250, 200, 20),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.white, // <-- HIGH CONTRAST
+        ),
       ),
+      leading: Icon(icon, size: 30, color: Colors.white),
+      trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),
         side: BorderSide(color: Colors.grey.shade300),
       ),
-      tileColor: const Color.fromARGB(249, 0, 114, 188),
+      tileColor: Colors.deepPurple, // Safer color
       onTap: onTap,
     );
   }
