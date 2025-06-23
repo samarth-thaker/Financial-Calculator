@@ -24,22 +24,4 @@ class Inputfield extends StatelessWidget {
   ),
   );
     
-  /* return TextField(
-      controller: controller,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(16),
-        hintText: hintText,
-        hintStyle: TextStyle(color: Colors.black54, fontSize: 16),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(0)),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.circular(0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade400),
-          borderRadius: BorderRadius.circular(0),
-        ),     fillColor: Colors.black,filled: false,
-          floatingLabelBehavior: FloatingLabelBehavior.never),
-    ); */
 }

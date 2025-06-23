@@ -3,6 +3,7 @@ import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});
@@ -12,7 +13,6 @@ class Loginscreen extends StatefulWidget {
 }
 
 class _LoginscreenState extends State<Loginscreen> {
-  // Move controllers inside the State class
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -39,7 +39,6 @@ class _LoginscreenState extends State<Loginscreen> {
           const SnackBar(content: Text('Login failed. Please try again.')),
         );
       }
-      
     } on FirebaseAuthException catch (e) {
       print("FirebaseAuthException: ${e.code} - ${e.message}");
       ScaffoldMessenger.of(context).showSnackBar(
@@ -90,7 +89,6 @@ class _LoginscreenState extends State<Loginscreen> {
                   Custompwdinput(
                     controller: _passwordController,
                     hintText: 'Password',
-                    
                   ),
                   const SizedBox(height: 20),
                   Custombutton(
@@ -107,11 +105,10 @@ class _LoginscreenState extends State<Loginscreen> {
                     children: [
                       const Text("Don't have an account?"),
                       TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/signupScreen');
-                        },
-                        child: const Text("Signup")
-                      )
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/signupScreen');
+                          },
+                          child: const Text("Signup"))
                     ],
                   ),
                 ],
