@@ -116,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Inputfield(
                     controller: _fullNameController,
                     hintText: 'Full Name',
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.text,
                   ),
                   const SizedBox(height: 20),
                   Inputfield(

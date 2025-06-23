@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -17,6 +19,23 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
   final TextEditingController _yearsController = TextEditingController();
 
   double _maturityValue = 0.0;
+  Future<void> saveCalculation({
+    required String type,
+    required Map<String, dynamic> inputs,
+    required Map<String, dynamic> outputs,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final calcRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('calculations');
+
+    await calcRef.add({
+      'type': type,
+      'inputs': inputs,
+      'outputs': outputs,
+    });
+  }
 
   double calculateLumpsumMaturity(
       double p, double annualInterestRate, int years) {
@@ -33,6 +52,13 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
     setState(() {
       _maturityValue =
           calculateLumpsumMaturity(principal, annualInterestRate, years);
+    });
+    saveCalculation(type: 'Lumpsum', inputs: {
+      'principal': principal,
+      'return(%)': annualInterestRate,
+      'time period': years
+    }, outputs: {
+      'lumpsumMaturity':_maturityValue,
     });
   }
 
@@ -69,7 +95,7 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double buttonWidth =
-        screenWidth * 0.8; // Adjust button width as 80% of screen width
+        screenWidth * 0.8; 
 
     return Scaffold(
       appBar: AppBar(title: const Text("Lumpsum SIP Calculator")),
@@ -94,7 +120,7 @@ class _LumpsumscreenState extends State<Lumpsumscreen> {
                 hintText: "Time period (upto 50 years)",
               ),
               const SizedBox(height: 30),
-              customTextButton("Calculate my wealth", _calculate, buttonWidth),
+              Custombutton(action:"Calculate my wealth",onTap: _calculate,buttonWidth: buttonWidth),
               const SizedBox(height: 30),
               Custombutton(
                   action: "Reset", onTap: reset, buttonWidth: buttonWidth),

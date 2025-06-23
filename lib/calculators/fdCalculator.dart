@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class FDscreen extends StatefulWidget {
   const FDscreen({Key? key}) : super(key: key);
@@ -15,11 +16,26 @@ class _FDscreenState extends State<FDscreen> {
   final TextEditingController _annualInterestRateController =
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
-  //final TextEditingController _amountInvestedController = TextEditingController();
 
   double _maturityValue = 0.0;
-  /* double _amountInvested = 0.0;
-  double _earnings = 0.0; */
+
+  Future<void> saveCalculation({
+    required String type,
+    required Map<String, dynamic> inputs,
+    required Map<String, dynamic> outputs,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final calcRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('calculations');
+
+    await calcRef.add({
+      'type': type,
+      'inputs': inputs,
+      'outputs': outputs,
+    });
+  }
 
   double fdMaturity(double p, double annualInterestRate, int years) {
     double maturityValue = p + ((p * annualInterestRate * years) / 100);
@@ -44,9 +60,13 @@ class _FDscreenState extends State<FDscreen> {
 
     setState(() {
       _maturityValue = fdMaturity(principal, annualInterestRate, years);
-      /* _amountInvested =
-          investedAmount(monthlyInvestment, annualInterestRate, years);
-      _earnings = amountEarned(monthlyInvestment, annualInterestRate, years); */
+    });
+    saveCalculation(type: 'Fixed deposit', inputs: {
+      'principal': principal,
+      'return(%)': annualInterestRate,
+      'time period': years,
+    }, outputs: {
+      'fdAmount': _maturityValue,
     });
   }
 

@@ -15,13 +15,13 @@ class Inputfield extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextFormField(
-    controller: controller,
-     decoration: InputDecoration(
-          hintText: hintText, 
+        controller: controller,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          hintText: hintText,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-  ),
-  );
-    
+        ),
+      );
 }

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -25,13 +27,29 @@ class _FIREState extends State<FireScreen> {
   double fire = 0.0;
   double expenseToday = 0.0;
   double expenseInFuture = 0.0;
+  Future<void> saveCalculation({
+    required String type,
+    required Map<String, dynamic> inputs,
+    required Map<String, dynamic> outputs,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final calcRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('calculations');
+
+    await calcRef.add({
+      'type': type,
+      'inputs': inputs,
+      'outputs': outputs,
+    });
+  }
 
   double fireNumber(double monthlyExpense, int currentAge, int retirementAge,
       double inflation) {
     double annualExpense =
         future(monthlyExpense, currentAge, retirementAge, inflation);
-    return annualExpense /
-        0.04; // Adjust this if needed based on your withdrawal rate assumption
+    return annualExpense / 0.04;
   }
 
   double fat(double monthlyExpense, int currentAge, int retirementAge,
@@ -52,10 +70,6 @@ class _FIREState extends State<FireScreen> {
     return monthlyExpense * pow(sum, diff) * 12;
   }
 
-  /* double lean(double monthlyExpense) {
-    return monthlyExpense * 12 * 20;
-  } */
-
   void calculate() {
     double monthlyExpense =
         double.tryParse(_monthlyExpenseController.text) ?? 0.0;
@@ -69,6 +83,15 @@ class _FIREState extends State<FireScreen> {
           future(monthlyExpense, currentAge, retirementAge, inflation);
       fatFire = fat(monthlyExpense, currentAge, retirementAge, inflation);
       fire = fireNumber(monthlyExpense, currentAge, retirementAge, inflation);
+    });
+    saveCalculation(type: 'FIRE', inputs: {
+      'monthlyexpense': monthlyExpense,
+      'currentage': currentAge,
+      'retirementage': retirementAge,
+      'assumedinflation': inflation,
+    }, outputs: {
+      'fatfire': fatFire,
+      'fire': fire,
     });
   }
 
@@ -99,22 +122,9 @@ class _FIREState extends State<FireScreen> {
             child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                width: 300,
-                child: TextField(
+              Inputfield(
                   controller: _monthlyExpenseController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromARGB(249, 0, 114, 188),
-                      ),
-                    ),
-                    hintText: "Monthly Expense (in Rs.)",
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
-              ),
+                  hintText: "Monthly Expense (in Rs.)"),
               const SizedBox(height: 30),
               Inputfield(
                 controller: _currentAgeController,

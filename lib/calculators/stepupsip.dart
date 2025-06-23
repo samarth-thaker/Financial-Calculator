@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -17,11 +19,27 @@ class _UPscreenState extends State<UPscreen> {
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
   final TextEditingController _stepUpController = TextEditingController();
-  //final TextEditingController _amountInvestedController = TextEditingController();
 
   double _maturityValue = 0.0;
   double _amountInvested = 0.0;
   double _earnings = 0.0;
+  Future<void> saveCalculation({
+    required String type,
+    required Map<String, dynamic> inputs,
+    required Map<String, dynamic> outputs,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final calcRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('calculations');
+
+    await calcRef.add({
+      'type': type,
+      'inputs': inputs,
+      'outputs': outputs,
+    });
+  }
 
   double calculateSIPMaturity(double monthlyInvestment,
       double annualInterestRate, int years, double stepUpPercentage) {
@@ -48,7 +66,6 @@ class _UPscreenState extends State<UPscreen> {
       for (int month = 0; month < 12; month++) {
         amountInvested += monthlyInvestment;
       }
-      // Increase the monthly investment amount by the step-up percentage
       monthlyInvestment += monthlyInvestment * (s / 100);
     }
     return amountInvested;
@@ -73,6 +90,15 @@ class _UPscreenState extends State<UPscreen> {
       _amountInvested =
           investedAmount(monthlyInvestment, annualInterestRate, years, s);
       _earnings = amountEarned(monthlyInvestment, annualInterestRate, years, s);
+    });
+    saveCalculation(type: 'Step up sip', inputs: {
+      'monthlyinvestment': monthlyInvestment,
+      'return(%)': annualInterestRate,
+      'stepup(%)': s,
+      'time period': years,
+    }, outputs: {
+      'stepupmaturity':_maturityValue,
+      'amountinvested':_amountInvested,
     });
   }
 

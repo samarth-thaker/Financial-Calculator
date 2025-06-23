@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -17,33 +19,37 @@ class _CagrscreenState extends State<Cagrscreen> {
   final TextEditingController _annualInterestRateController =
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
-  //final TextEditingController _amountInvestedController = TextEditingController();
 
   double _overallGrowth = 0.0;
-  /* double _amountInvested = 0.0;
-  double _earnings = 0.0; */
+
+  Future<void> saveCalculation({
+    required String type,
+    required Map<String, dynamic> inputs,
+    required Map<String, dynamic> outputs,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final calcRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('calculations');
+
+    await calcRef.add({
+      'type': type,
+      'inputs': inputs,
+      'outputs': outputs,
+    });
+  }
 
   double calculateCAGR(double i, double f, int years) {
-    /*  double monthlyRate =
-        (annualInterestRate / 100) / 12; */ // Monthly interest rate
-    /* int months = years * 12;  */ // Total number of months
-
     double per = pow(f / i, 1 / years) - 1;
     return per * 100;
   }
-
-  
 
   double investedAmount(
       double monthlyInvestment, double annualInterestRate, int years) {
     double amountInvested = monthlyInvestment * years * 12;
     return amountInvested;
   }
-
-  /* double amountEarned(
-      double p, double annualInterestRate, int years) {
-    return calculateLumpsumMaturity(p, annualInterestRate, years) - p;
-  } */
 
   void _calculate() {
     double principal = double.parse(_principalController.text);
@@ -53,9 +59,12 @@ class _CagrscreenState extends State<Cagrscreen> {
 
     setState(() {
       _overallGrowth = calculateCAGR(principal, annualInterestRate, years);
-      /* _amountInvested =
-          investedAmount(monthlyInvestment, annualInterestRate, years);
-      _earnings = amountEarned(monthlyInvestment, annualInterestRate, years); */
+    });
+    saveCalculation(type: 'CAGR', inputs: {
+      'initialinvestment': principal,
+      'time period': years,
+    }, outputs: {
+      'cagr': _overallGrowth,
     });
   }
 
@@ -94,9 +103,13 @@ class _CagrscreenState extends State<Cagrscreen> {
                 hintText: "Time period (upto 50 years)",
               ),
               const SizedBox(height: 30),
-              Custombutton(action:'Calculate CAGR ',onTap:  _calculate, buttonWidth:buttonWidth),
+              Custombutton(
+                  action: 'Calculate CAGR ',
+                  onTap: _calculate,
+                  buttonWidth: buttonWidth),
               const SizedBox(height: 30),
-              Custombutton(action:'Reset',onTap:  reset, buttonWidth:buttonWidth),
+              Custombutton(
+                  action: 'Reset', onTap: reset, buttonWidth: buttonWidth),
               const SizedBox(height: 30),
               Text('CAGR: ${_overallGrowth.toStringAsFixed(2)}%'),
               const SizedBox(height: 30),

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -18,6 +20,23 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
   final TextEditingController _initialInvestmentController =
       TextEditingController();
   double timeYears = 0.0;
+  Future<void> saveCalculation({
+    required String type,
+    required Map<String, dynamic> inputs,
+    required Map<String, dynamic> outputs,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final calcRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('calculations');
+
+    await calcRef.add({
+      'type': type,
+      'inputs': inputs,
+      'outputs': outputs,
+    });
+  }
 
   double calculateYears(double targetedWealth, double initialInvestment,
       double annualInterestRate) {
@@ -35,6 +54,13 @@ class _TimeDurationOneTimeScreen extends State<TimeDurationLumpsum> {
     setState(() {
       timeYears =
           calculateYears(targetedWealth, initialInvestment, annualInterestRate);
+    });
+    saveCalculation(type: 'Time duration lumpsum', inputs: {
+      'targetedwealth': targetedWealth,
+      'initialinvestment': initialInvestment,
+      'return(%)': annualInterestRate,
+    }, outputs: {
+      'timedurationOnetime':timeYears,
     });
   }
 

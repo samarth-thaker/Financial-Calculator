@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -20,6 +22,23 @@ class _LumpsumscreenState extends State<Goallumpsum> {
 
   double _maturityValue = 0.0;
   double _amountInvested = 0.0;
+  Future<void> saveCalculation({
+    required String type,
+    required Map<String, dynamic> inputs,
+    required Map<String, dynamic> outputs,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final calcRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('calculations');
+
+    await calcRef.add({
+      'type': type,
+      'inputs': inputs,
+      'outputs': outputs,
+    });
+  }
 
   double inflationAdjustedTargetedWealth(
       double targetedWealth, int years, double inflation) {
@@ -45,6 +64,14 @@ class _LumpsumscreenState extends State<Goallumpsum> {
       _amountInvested =
           investedAmount(targetedWealth, annualInterestRate, years, inflation);
     });
+    saveCalculation(type: 'Goal planning - lumpsum', inputs: {
+      'targetedwealth': targetedWealth,
+      'assumedinflation': inflation,
+      'time period': years,
+      'return(%)': annualInterestRate,
+    }, outputs: {
+      'lumpsuminvestmentamount': _maturityValue,
+    });
   }
 
   void reset() {
@@ -56,26 +83,6 @@ class _LumpsumscreenState extends State<Goallumpsum> {
       _maturityValue = 0.0;
       _amountInvested = 0.0;
     });
-  }
-
-  Widget customTextButton(
-      String action, VoidCallback onTap, double buttonWidth) {
-    return Container(
-      width: buttonWidth,
-      child: TextButton(
-        onPressed: onTap,
-        style: ButtonStyle(
-          backgroundColor:
-              WidgetStateProperty.all(Color.fromARGB(249, 0, 114, 188)),
-          padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 12)),
-        ),
-        child: Text(
-          action,
-          style:
-              TextStyle(color: Color.fromARGB(249, 250, 200, 20), fontSize: 20),
-        ),
-      ),
-    );
   }
 
   @override
@@ -110,7 +117,10 @@ class _LumpsumscreenState extends State<Goallumpsum> {
                     hintText: "Expected return (in % p.a)",
                   ),
                   const SizedBox(height: 30),
-                  customTextButton("Plan my goal", _calculate, buttonWidth),
+                  Custombutton(
+                      action: "Plan my goal",
+                      onTap: _calculate,
+                      buttonWidth: buttonWidth),
                   const SizedBox(height: 30),
                   Custombutton(
                       action: "Reset", onTap: reset, buttonWidth: buttonWidth),

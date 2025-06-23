@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -23,10 +25,26 @@ class _SIPGoalScreen extends State<SIPGoal> {
       TextEditingController();
   final TextEditingController _inflationController = TextEditingController();
 
-  // double _maturityValue = 0.0;
-  //double _amountInvested = 0.0;
-  //double _earnings = 0.0;
+  
   double _investmentPerMonth = 0.0;
+  Future<void> saveCalculation({
+    required String type,
+    required Map<String, dynamic> inputs,
+    required Map<String, dynamic> outputs,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final calcRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('calculations');
+
+    await calcRef.add({
+      'type': type,
+      'inputs': inputs,
+      'outputs': outputs,
+    });
+  }
+
   double inflationAdjustedTargetedWealth(
       double targetedWealth, int years, double inflation) {
     return targetedWealth * pow((1 + inflation / 100), years);
@@ -44,19 +62,6 @@ class _SIPGoalScreen extends State<SIPGoal> {
     double sipAmount = futureValue / denominator;
     return sipAmount;
   }
-
-  /* double investedAmount(
-      double monthlyInvestment, double annualInterestRate, int years) {
-    double amountInvested = monthlyInvestment * years * 12;
-    return amountInvested;
-  } */
-
-/*   double amountEarned(
-      double monthlyInvestment, double annualInterestRate, int years) {
-    return calculateSIPMaturity(monthlyInvestment, annualInterestRate, years) -
-        investedAmount(monthlyInvestment, annualInterestRate, years);
-  } */
-
   void _calculate() {
     double targetedWealth = double.parse(_targetedWealthController.text);
     double annualInterestRate =
@@ -67,11 +72,17 @@ class _SIPGoalScreen extends State<SIPGoal> {
     setState(() {
       _investmentPerMonth = monthlyInvestment(
           targetedWealth, annualInterestRate, years, inflation);
-      //_amountInvested = investedAmount(monthlyInvestment, annualInterestRate, years);
-      //_earnings = amountEarned(monthlyInvestment, annualInterestRate, years);
+      
+    });
+    saveCalculation(type: 'Goal planning - SIP', inputs: {
+      'targetedwealth':targetedWealth,
+      'return(%)':annualInterestRate,
+      'time period':years,
+      'assumedinflation':inflation,
+    }, outputs: {
+      'sipamount':_investmentPerMonth,
     });
   }
-
   void reset() {
     (_annualInterestRateController.clear());
     (_targetedWealthController.clear());
@@ -81,7 +92,6 @@ class _SIPGoalScreen extends State<SIPGoal> {
       _investmentPerMonth = 0.0;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -114,7 +124,6 @@ class _SIPGoalScreen extends State<SIPGoal> {
               hintText: "Adjust for inflation",
             ),
             const SizedBox(height: 30),
-           
             Custombutton(
                 action: "Plan SIP Goal",
                 onTap: _calculate,
@@ -126,7 +135,6 @@ class _SIPGoalScreen extends State<SIPGoal> {
             Text(
                 'Monthly Investment Required: Rs. ${_investmentPerMonth.toStringAsFixed(2)}'),
             const SizedBox(height: 30),
-            
           ],
         ))),
       ),

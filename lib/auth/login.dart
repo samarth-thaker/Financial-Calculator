@@ -54,7 +54,6 @@ class _LoginscreenState extends State<Loginscreen> {
 
   @override
   void dispose() {
-    // Dispose controllers to prevent memory leaks
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();

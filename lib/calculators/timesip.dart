@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -21,6 +23,23 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
   final TextEditingController _initialInvestmentController =
       TextEditingController();
   double timeYears = 0.0;
+  Future<void> saveCalculation({
+    required String type,
+    required Map<String, dynamic> inputs,
+    required Map<String, dynamic> outputs,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final calcRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('calculations');
+
+    await calcRef.add({
+      'type': type,
+      'inputs': inputs,
+      'outputs': outputs,
+    });
+  }
 
   double calculateYears(double targetedWealth, double monthlyInvestment,
       double annualInterestRate) {
@@ -40,6 +59,13 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
     setState(() {
       timeYears =
           calculateYears(targetedWealth, monthlyInvestment, annualInterestRate);
+    });
+    saveCalculation(type: 'Time duration SIP', inputs: {
+      'targetedwealth':targetedWealth,
+      'monthlyinvestment':monthlyInvestment,
+      'return(%)':annualInterestRate,
+    }, outputs: {
+      'timedurationRegular': timeYears,
     });
   }
 
@@ -100,8 +126,8 @@ class _TimeDurationRegularScreen extends State<TimeDurationRegularScreen> {
                   hintText: "Monthly Investment",
                 ),
                 const SizedBox(height: 30),
-                customTextButton(
-                    'Calculate Time Duration', _calculate, buttonWidth),
+                Custombutton(
+                   action:  'Calculate Time Duration',onTap:  _calculate,buttonWidth:  buttonWidth),
                 const SizedBox(height: 30),
                 Custombutton(
                     action: "Reset", onTap: reset, buttonWidth: buttonWidth),

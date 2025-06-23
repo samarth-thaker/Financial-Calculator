@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-
 import 'package:flutter/widgets.dart';
 
 class SIPscreen extends StatefulWidget {
@@ -19,17 +20,33 @@ class _SIPscreenState extends State<SIPscreen> {
   final TextEditingController _annualInterestRateController =
       TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
-  //final TextEditingController _amountInvestedController = TextEditingController();
+  
 
   double _maturityValue = 0.0;
   double _amountInvested = 0.0;
   double _earnings = 0.0;
+  Future<void> saveCalculation({
+    required String type,
+    required Map<String, dynamic> inputs,
+    required Map<String, dynamic> outputs,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final calcRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('calculations');
+
+    await calcRef.add({
+      'type': type,
+      'inputs': inputs,
+      'outputs': outputs,
+    });
+  }
 
   double calculateSIPMaturity(
       double monthlyInvestment, double annualInterestRate, int years) {
-    double monthlyRate =
-        (annualInterestRate / 100) / 12; // Monthly interest rate
-    int months = years * 12; // Total number of months
+    double monthlyRate = (annualInterestRate / 100) / 12;
+    int months = years * 12;
 
     double maturityValue = monthlyInvestment *
         (pow(1 + monthlyRate, months) - 1) /
@@ -49,7 +66,6 @@ class _SIPscreenState extends State<SIPscreen> {
     return calculateSIPMaturity(monthlyInvestment, annualInterestRate, years) -
         investedAmount(monthlyInvestment, annualInterestRate, years);
   }
-
 
   void reset() {
     (_monthlyInvestmentController.clear());
@@ -75,26 +91,31 @@ class _SIPscreenState extends State<SIPscreen> {
           investedAmount(monthlyInvestment, annualInterestRate, years);
       _earnings = amountEarned(monthlyInvestment, annualInterestRate, years);
     });
+    saveCalculation(type: 'SIP', inputs: {
+      'monthlyinvestment': monthlyInvestment,
+      'return(%)': annualInterestRate,
+      'time period': years,
+    }, outputs: {
+      'amountinvested': _amountInvested,
+      'sipmaturity': _maturityValue,
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double buttonWidth = screenWidth * 0.8; //
+    double buttonWidth = screenWidth * 0.8; 
     return Scaffold(
       appBar: AppBar(title: const Text("SIP Calculator")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
-          child:SingleChildScrollView(
-            child:Column(
-              children: [
-           Inputfield(
-              
-                controller: _monthlyInvestmentController,
-               
-                  hintText: "Monthly investment (in Rs.)",
-                 
+            child: SingleChildScrollView(
+                child: Column(
+          children: [
+            Inputfield(
+              controller: _monthlyInvestmentController,
+              hintText: "Monthly investment (in Rs.)",
             ),
             const SizedBox(height: 30),
             Inputfield(
@@ -103,13 +124,17 @@ class _SIPscreenState extends State<SIPscreen> {
             ),
             const SizedBox(height: 30),
             Inputfield(
-                controller: _yearsController,
-                hintText: "Time period (upto 50 years)",
-              ),
+              controller: _yearsController,
+              hintText: "Time period (upto 50 years)",
+            ),
             const SizedBox(height: 30),
-            Custombutton( action: 'Calculate',onTap:  _calculate,buttonWidth:  buttonWidth),
+            Custombutton(
+                action: 'Calculate',
+                onTap: _calculate,
+                buttonWidth: buttonWidth),
             const SizedBox(height: 30),
-           Custombutton(action: "Reset",onTap: reset, buttonWidth:buttonWidth),
+            Custombutton(
+                action: "Reset", onTap: reset, buttonWidth: buttonWidth),
             const SizedBox(height: 30),
             Text('Maturity value: Rs. ${_maturityValue.toStringAsFixed(2)}'),
             const SizedBox(height: 30),
@@ -117,10 +142,7 @@ class _SIPscreenState extends State<SIPscreen> {
             const SizedBox(height: 30),
             Text('Earnings: Rs. ${_earnings.toStringAsFixed(2)}'),
           ],
-
-            )
-          )
-                  ),
+        ))),
       ),
     );
   }
