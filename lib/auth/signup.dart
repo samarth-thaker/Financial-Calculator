@@ -1,4 +1,4 @@
-import 'package:financial_calculator/widgets/customPWDinput.dart';
+import 'package:financial_calculator/widgets/passwordInput.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -169,13 +169,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   Custompwdinput(
                     controller: _passwordController,
                     hintText: 'Password (min 6 characters)',
-                    keyboardType: TextInputType.text,
+                    
                   ),
                   const SizedBox(height: 20),
                   Custompwdinput(
                     controller: _confirmPasswordController,
                     hintText: 'Confirm Password',
-                    keyboardType: TextInputType.text,
+                    
                   ),
                   const SizedBox(height: 20),
                   Custombutton(

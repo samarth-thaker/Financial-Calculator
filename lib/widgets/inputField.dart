@@ -14,8 +14,17 @@ class Inputfield extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return TextField(
+  Widget build(BuildContext context) => TextFormField(
+    controller: controller,
+     decoration: InputDecoration(
+          hintText: hintText, 
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+  ),
+  );
+    
+  /* return TextField(
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
@@ -32,6 +41,5 @@ class Inputfield extends StatelessWidget {
           borderRadius: BorderRadius.circular(0),
         ),     fillColor: Colors.black,filled: false,
           floatingLabelBehavior: FloatingLabelBehavior.never),
-    );
-  }
+    ); */
 }

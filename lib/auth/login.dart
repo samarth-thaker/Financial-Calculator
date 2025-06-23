@@ -1,4 +1,4 @@
-import 'package:financial_calculator/widgets/customPWDinput.dart';
+import 'package:financial_calculator/widgets/passwordInput.dart';
 import 'package:financial_calculator/widgets/customTextButton.dart';
 import 'package:financial_calculator/widgets/inputField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -90,7 +90,7 @@ class _LoginscreenState extends State<Loginscreen> {
                   Custompwdinput(
                     controller: _passwordController,
                     hintText: 'Password',
-                    keyboardType: TextInputType.text,
+                    
                   ),
                   const SizedBox(height: 20),
                   Custombutton(

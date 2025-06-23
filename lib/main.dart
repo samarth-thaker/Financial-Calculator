@@ -22,11 +22,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   try {
-    // Load environment variables first
+    
     await dotenv.load(fileName: "assets/.env");
     print("✅ Environment variables loaded successfully");
     
-    // Initialize Firebase
+    
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
@@ -36,12 +36,12 @@ void main() async {
     
   } catch (e) {
     print("❌ Error during initialization: $e");
-    // Run app with error handling
+    
     runApp(ErrorApp(error: e.toString()));
   }
 }
 
-// Error app to show when Firebase initialization fails
+
 class ErrorApp extends StatelessWidget {
   final String error;
   
@@ -72,7 +72,7 @@ class ErrorApp extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    // Restart the app
+                    
                     main();
                   },
                   child: const Text('Retry'),
@@ -97,7 +97,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // Use FutureBuilder to ensure Firebase is ready
       home: FutureBuilder(
         future: _checkFirebaseInitialization(),
         builder: (context, snapshot) {
@@ -166,10 +165,9 @@ class MyApp extends StatelessWidget {
     );
   }
   
-  // Helper method to check Firebase initialization
+  
   Future<void> _checkFirebaseInitialization() async {
     try {
-      // Verify Firebase is initialized
       if (Firebase.apps.isEmpty) {
         throw Exception('Firebase not initialized');
       }
